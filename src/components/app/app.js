@@ -36,14 +36,14 @@ export default class App extends Component {
 
 
     render() {
-        const char = this.state.showRandomChar ? <RandomChar/> : null;
+        const char = this.state.showRandomChar ? <RandomChar interval={15000}/> : null;
 
         if (this.state.error) {
             return <ErrorMessage/>
         }
 
         return (
-            <Router> 
+            <Router>
                 <div className='app'>
                     <Container>
                         <Header />
@@ -52,7 +52,7 @@ export default class App extends Component {
                         <Row>
                             <Col lg={{size: 5, offset: 0}}>
                             {char}
-                            <button 
+                            <button
                                 className="toggle-btn"
                                 onClick={this.toggleRandomChar}>Toggle random character</button>
                             </Col>
