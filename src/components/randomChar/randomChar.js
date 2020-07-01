@@ -2,29 +2,30 @@ import React, {Component} from 'react';
 import './randomChar.css';
 import gotService from '../../services/gotService';
 import Spinner from '../spinner';
-import ErrorMessage from '../errorMessage'
+import ErrorMessage from '../errorMessage';
 
 export default class RandomChar extends Component {
-    
+
     gotService = new gotService();
     state = {
         char: {},
-        loading: true
+        loading: true,
+        error: false
     }
 
     componentDidMount() {
         this.updateChar();
-        this.timerId = setInterval(this.updateChar, 4000);
+        this.timerId = setInterval(this.updateChar, 15000);
     }
-    componentWillMount() {
+
+    componentWillUnmount(){
         clearInterval(this.timerId);
     }
 
     onCharLoaded = (char) => {
         this.setState({
             char,
-            loading: false,
-            error: false
+            loading: false
         })
     }
 
@@ -36,18 +37,17 @@ export default class RandomChar extends Component {
     }
 
     updateChar = () => {
-        const id = Math.floor(Math.random()*140 + 55);
-        //const id = 1300000000;
+        const id = Math.floor(Math.random()*140 + 25); //25-140
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError);
     }
 
     render() {
-        const { char, loading, error} = this.state;
+        const { char, loading, error } = this.state;
 
         const errorMessage = error ? <ErrorMessage/> : null;
-        const spinner = loading ? <Spinner/> : null
+        const spinner = loading ? <Spinner/> : null;
         const content = !(loading || error) ? <View char={char}/> : null;
 
         return (
@@ -59,10 +59,9 @@ export default class RandomChar extends Component {
         );
     }
 }
-
 const View = ({char}) => {
-    const {gender, name, born,died, culture} = char;
-    return(
+    const {name, gender, born, died, culture} = char;
+    return (
         <>
             <h4>Random Character: {name}</h4>
             <ul className="list-group list-group-flush">

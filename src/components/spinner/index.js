@@ -1,2 +1,2 @@
-import Spiner from './spinner';
-export default Spiner;
+import Spinner from './spinner';
+export default Spinner;

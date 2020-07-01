@@ -25,7 +25,7 @@ export default class ItemList extends Component {
 
             const label = this.props.renderItem(item);
 
-           return (
+            return (
                 <li 
                     key={id}
                     className="list-group-item"
